@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "record-store-locator-frontend",
+    "description": "This project is really great.",
+    "slug": "record-store-locator-frontend",
+    "privacy": "public",
+    "sdkVersion": "27.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "facebookSchema": "fb1149728978500849",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.newcodesmith.record-store-locator"
+    },
+    "android": {
+      "package": "com.newcodesmith.record-store-locator"
+    }
+  }
+}
