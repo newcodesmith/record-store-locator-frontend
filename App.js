@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {YellowBox} from 'react-native'
+import { YellowBox } from 'react-native'
 console.disableYellowBox = true
+import { StackNavigator } from "react-navigation"
 
-import HomeScreen from './Components/HomeScreen.js';
+import HomeScreen from './components/HomeScreen.js';
+import MapHome from './components/MapHome.js';
 
-export default class App extends React.Component {
+class App extends React.Component {
+
   render() {
     return (
       <View style={styles.container}>
@@ -15,10 +18,20 @@ export default class App extends React.Component {
   }
 }
 
+export default StackNavigator({
+  Home: {
+    screen: App,
+  },
+  MapHome: {
+    screen: MapHome,
+  }
+})
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#2e4366',
     alignItems: 'center',
     justifyContent: 'center',
   },

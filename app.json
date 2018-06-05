@@ -14,7 +14,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "facebookSchema": "fb1149728978500849",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -23,10 +22,6 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.newcodesmith.record-store-locator"
     },
-    "android": {
-      "package": "com.newcodesmith.record-store-locator"
-    }
   }
 }
