@@ -1,15 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default class App extends React.Component {
-  render() {
-    return (
+const MapHome =() => (
       <View style={styles.container}>
-          <Text>This will be the map page</Text>
+          <Text>Hello</Text>
       </View>
     );
-  }
-}
+
+export default  MapHome;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,32 +1,34 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { YellowBox } from 'react-native'
-console.disableYellowBox = true
-import { StackNavigator } from "react-navigation"
+import { YellowBox } from 'react-native';
+console.disableYellowBox = true;
+// import { createStackNavigator } from "react-navigation";
+import { Router, Scene } from 'react-native-router-flux';
 
 import HomeScreen from './components/HomeScreen.js';
 import MapHome from './components/MapHome.js';
 
-class App extends React.Component {
+const App = () => (
+    <Router>
+      <Scene
+        key="root">
+        <Scene 
+          key="home"
+          component={HomeScreen}
+          style={styles.container}
+          hideNavBar={true}
+          initial
+        />
+        <Scene
+          key="vinylMap"
+          component={MapHome}
+          title="Vinyl Map"
+        />
+      </Scene>
+    </Router>
+);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <HomeScreen />
-      </View>
-    );
-  }
-}
-
-export default StackNavigator({
-  Home: {
-    screen: App,
-  },
-  MapHome: {
-    screen: MapHome,
-  }
-})
-
+export default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -36,3 +38,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+

@@ -9,7 +9,7 @@ import {
 import Expo, { Constants } from 'expo';
 import { WebBrowser } from 'expo';
 import { SocialIcon, Avatar } from "react-native-elements"
-
+import { Actions } from 'react-native-router-flux';
 
 export default class HomeScreen extends React.Component {
 
@@ -37,10 +37,11 @@ export default class HomeScreen extends React.Component {
                 userName: fbUserInfo.name,
                 userPic: fbUserInfo.picture
               })
+              
               console.log(this.state, "the state");
               console.log(this.props, "the props");
               
-              // this.props.navigation.navigate("MapHome", { userInfo: this.state })
+              Actions.vinylMap({userInfo: this.state});
             })
             .catch(() => {
               reject("ERROR GETTING DATA FROM FACEBOOK")
@@ -55,7 +56,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.headline}>Find My Record Store</Text>
+        <Text style={styles.headline}>VINYL FINDER</Text>
         <SocialIcon
           title="Sign In With Facebook"
           button
