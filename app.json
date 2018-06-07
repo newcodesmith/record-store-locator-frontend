@@ -23,5 +23,13 @@
     "ios": {
       "supportsTablet": true,
     },
+    "android": {
+      "package": "com.newcodesmith.vinylfinder",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDdduVnhUIyVOMDGmaOng4yfnpIxM5X8Kc"
+        }
+      }
+    }
   }
 }
