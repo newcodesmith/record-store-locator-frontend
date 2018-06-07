@@ -11,8 +11,8 @@ export default class MapHome extends Component {
       mapRegion: null,
       hasLocationPermissions: false,
       locationResult: null,
-      currentUser: this.props.navigation.state.params.userName,
-      userPicture: this.props.navigation.state.params.userPic,
+      currentUser: this.props.userName,
+      userPicture: this.props.userPic,
     }
   }
 
@@ -41,6 +41,8 @@ export default class MapHome extends Component {
         longitudeDelta: 0.0421
       }
     })
+    console.log(this.props.userName, 'map state');
+
   }
 
   componentDidMount() {
@@ -49,21 +51,51 @@ export default class MapHome extends Component {
 
   render() {
     return (
-
-      <MapView
-        provider={Expo.MapView.PROVIDER_GOOGLE}
-        customMapStyle={MapStyle}
-        style={{ flex: 1 }}
-        region={this.state.mapRegion}
-        onRegionChange={this._handleMapRegionChange}
-        showsUserLocation={true}
-        zoomEnabled={true}
-        pitchEnabled={true}
-        showsUserLocation={true}
-        followsUserLocation={true}
+      <View
+        style={styles.container}
       >
-      </MapView>
+        <Text style={styles.paragraph}>{this.props.currentUser}</Text>
+        <MapView
+          provider={Expo.MapView.PROVIDER_GOOGLE}
+          customMapStyle={MapStyle}
+          style={styles.map}
+          initialRegion={{
+            latitude: 39.739978,
+            longitude: -104.9754614,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
+          region={this.state.mapRegion}
+          onRegionChange={this._handleMapRegionChange}
+          showsUserLocation={true}
+          zoomEnabled={true}
+          pitchEnabled={true}
+          showsUserLocation={true}
+          followsUserLocation={true}
+        >
+        <View>
+          <MapView.Marker
+            coordinate={{
+              latitude: 39.740188,
+              longitude: -104.956992
+            }}
+            title={"Twist & Shout"}
+            description={"Record Store"}
+          />
+          <MapView.Marker
+            coordinate={{
+              latitude: 39.736965,
+              longitude: -104.978906
+            }}
+            title={"Wax Trax"}
+            description={"Record Store"}
+          />
 
+        </View>
+
+
+        </MapView>
+      </View>
     );
   }
 }
@@ -73,12 +105,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
   },
   paragraph: {
-    margin: 24,
     fontSize: 18,
     textAlign: 'center',
+    zIndex: 1
+  },
+  map: {
+    zIndex: 0,
+    flex: 1,
+    height: "100%",
+    width: "100%",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
   },
 });

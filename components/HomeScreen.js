@@ -15,7 +15,7 @@ export default class HomeScreen extends React.Component {
 
   state = {
     userName: null,
-    userPicture: {
+    userPic: {
       data: {
         url: ""
       }
