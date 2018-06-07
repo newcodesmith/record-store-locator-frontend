@@ -1,0 +1,86 @@
+import React, { Component } from 'react';
+import {
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  View,
+  StyleSheet,
+} from 'react-native';
+import Expo, { Constants } from 'expo';
+import { WebBrowser } from 'expo';
+import { SocialIcon, Avatar } from "react-native-elements"
+import { Actions } from 'react-native-router-flux';
+
+export default class HomeScreen extends React.Component {
+
+  state = {
+    userName: null,
+    userPic: {
+      data: {
+        url: ""
+      }
+    }
+  };
+
+
+  login = () => {
+    Expo.Facebook.logInWithReadPermissionsAsync('1149728978500849', {
+      permissions: ["public_profile"]
+    })
+      .then(response => {
+        const { token, type } = response
+        if (type === "success") {
+          fetch(`https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=${token}&fields=id,name,picture.type(large)`)
+            .then((response) => response.json())
+            .then((fbUserInfo) => {
+              this.setState({
+                userName: fbUserInfo.name,
+                userPic: fbUserInfo.picture
+              })
+              
+              console.log(this.state, "the state");
+              console.log(this.props, "the props");
+              
+              Actions.vinylMap({userInfo: this.state});
+            })
+            .catch(() => {
+              reject("ERROR GETTING DATA FROM FACEBOOK")
+            })
+        } else {
+          Alert.alert("Unable to connect to Facebook")
+        }
+      })
+  };
+
+
+  render() {
+    return (
+        <View>
+          <MapView.Marker
+            coordinate={{
+              latitude: 39.740188,
+              longitude: -104.956992
+            }}
+            title={"Twist & Shout"}
+            description={"Record Store"}
+          />
+        </View>
+    )
+  }
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#2e4366",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headline: {
+    textAlign: "center",
+    fontSize: 50,
+    color: "white",
+    marginBottom: 100
+  },
+})
