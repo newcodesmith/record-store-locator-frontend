@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
+import { Avatar } from "react-native-elements"
 import { Constants, Location, Permissions } from 'expo';
 import { MapView } from 'expo';
 import MapStyle from './MapStyle.json'
+import StoreLocations from './StoreLocations.js';
 
 export default class MapHome extends Component {
   constructor(props) {
@@ -41,20 +43,27 @@ export default class MapHome extends Component {
         longitudeDelta: 0.0421
       }
     })
-    console.log(this.props.userName, 'map state');
+    console.log(this.props.userPic.data.url, 'map props');
 
   }
 
   componentDidMount() {
-    this._getLocationAsync()
+    this._getLocationAsync();
   }
 
   render() {
+    const userName = this.props.userName;
+    const userPic = this.props.userPic.data.url;
     return (
       <View
         style={styles.container}
       >
-        <Text style={styles.paragraph}>{this.props.currentUser}</Text>
+        <Avatar
+          large
+          rounded
+          source={{ uri: userPic }}
+          overlayContainerStyle={styles.pic}
+        />
         <MapView
           provider={Expo.MapView.PROVIDER_GOOGLE}
           customMapStyle={MapStyle}
@@ -67,31 +76,13 @@ export default class MapHome extends Component {
           }}
           region={this.state.mapRegion}
           onRegionChange={this._handleMapRegionChange}
-          showsUserLocation={true}
           zoomEnabled={true}
           pitchEnabled={true}
           showsUserLocation={true}
-          followsUserLocation={true}
+          followsUserLocation={false}
+          showsMyLocationButton={true}
         >
-        <View>
-          <MapView.Marker
-            coordinate={{
-              latitude: 39.740188,
-              longitude: -104.956992
-            }}
-            title={"Twist & Shout"}
-            description={"Record Store"}
-          />
-          <MapView.Marker
-            coordinate={{
-              latitude: 39.736965,
-              longitude: -104.978906
-            }}
-            title={"Wax Trax"}
-            description={"Record Store"}
-          />
-
-        </View>
+          <StoreLocations />
 
 
         </MapView>
@@ -103,17 +94,18 @@ export default class MapHome extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#ecf0f1',
   },
-  paragraph: {
-    fontSize: 18,
-    textAlign: 'center',
-    zIndex: 1
+  pic: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    zIndex: 2,
+    margin: 0,
+    padding: 0,
   },
   map: {
-    zIndex: 0,
+    zIndex: -1,
     flex: 1,
     height: "100%",
     width: "100%",

@@ -33,15 +33,15 @@ export default class HomeScreen extends React.Component {
           fetch(`https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=${token}&fields=id,name,picture.type(large)`)
             .then((response) => response.json())
             .then((fbUserInfo) => {
-              this.setState({
+              Actions.vinylMap({
                 userName: fbUserInfo.name,
                 userPic: fbUserInfo.picture
               })
               
-              console.log(this.state, "the state");
-              console.log(this.props, "the props");
+              // console.log(this.state, "the state");
+              // console.log(this.props, "the props");
               
-              Actions.vinylMap({userInfo: this.state});
+              // Actions.vinylMap({userInfo: this.state});
             })
             .catch(() => {
               reject("ERROR GETTING DATA FROM FACEBOOK")

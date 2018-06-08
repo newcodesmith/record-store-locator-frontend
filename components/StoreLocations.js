@@ -9,62 +9,77 @@ import {
 import Expo, { Constants } from 'expo';
 import { WebBrowser } from 'expo';
 import { SocialIcon, Avatar } from "react-native-elements"
+import { MapView } from 'expo';
+
 import { Actions } from 'react-native-router-flux';
 
-export default class HomeScreen extends React.Component {
+export default class StoreLocations extends React.Component {
 
   state = {
-    userName: null,
-    userPic: {
-      data: {
-        url: ""
-      }
-    }
+    storeData: null,
   };
 
 
-  login = () => {
-    Expo.Facebook.logInWithReadPermissionsAsync('1149728978500849', {
-      permissions: ["public_profile"]
-    })
-      .then(response => {
-        const { token, type } = response
-        if (type === "success") {
-          fetch(`https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=${token}&fields=id,name,picture.type(large)`)
-            .then((response) => response.json())
-            .then((fbUserInfo) => {
-              this.setState({
-                userName: fbUserInfo.name,
-                userPic: fbUserInfo.picture
-              })
-              
-              console.log(this.state, "the state");
-              console.log(this.props, "the props");
-              
-              Actions.vinylMap({userInfo: this.state});
-            })
-            .catch(() => {
-              reject("ERROR GETTING DATA FROM FACEBOOK")
-            })
-        } else {
-          Alert.alert("Unable to connect to Facebook")
-        }
-      })
-  };
+  getLocations = () => {
+    const locationUrl = "http://vinyl-finder-server.herokuapp.com/stores";
+    let locationDataGrab = response => {
+      this.setState({ storeData: response });
+      console.log(this.state.storeData, "Locations")
 
+    };
+    return fetch(locationUrl)
+      .then(response => response.json())
+      .then(locationDataGrab)
+      .catch(error => console.log(error))
+
+
+  }
+
+  componentDidMount() {
+    this.getLocations();
+  }
 
   render() {
     return (
-        <View>
-          <MapView.Marker
-            coordinate={{
-              latitude: 39.740188,
-              longitude: -104.956992
-            }}
-            title={"Twist & Shout"}
-            description={"Record Store"}
-          />
-        </View>
+      <View>
+        <MapView.Marker
+          key={1}
+          coordinate={{
+            latitude: 39.740188,
+            longitude: -104.956992
+          }}
+          title={"Twist & Shout"}
+          description={"Record Store"}
+          onCalloutPress={()=> {console.log((key),"this was clicked")}}
+        />
+        <MapView.Marker
+          id={2}
+          coordinate={{
+            latitude: 39.736965,
+            longitude: -104.978906
+          }}
+          title={"Wax Trax Records"}
+          description={"Record Store"}
+        />
+        <MapView.Marker
+          id={3}
+          coordinate={{
+            latitude: 39.740255,
+            longitude: -104.975018
+          }}
+          title={"Angelo's CDs & More"}
+          description={"Record Store"}
+        />
+        <MapView.Marker
+          id={4}
+          coordinate={{
+            latitude: 39.736297,
+            longitude: -104.993243
+          }}
+          title={"Recollect Records"}
+          description={"Record Store"}
+        />
+      </View>
     )
   }
 }
