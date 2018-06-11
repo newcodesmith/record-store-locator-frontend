@@ -19,9 +19,20 @@ export default class HomeScreen extends React.Component {
       data: {
         url: ""
       }
-    }
+    },
+    storeData: [],
   };
 
+  getLocations = () => {
+    const locationUrl = "http://vinyl-finder-server.herokuapp.com/stores/";
+    let locationDataGrab = response => {
+      this.setState({ storeData: response });
+    };
+    return fetch(locationUrl)
+      .then(response => response.json())
+      .then(locationDataGrab)
+      .catch(error => console.log(error))
+  }
 
   login = () => {
     Expo.Facebook.logInWithReadPermissionsAsync('1149728978500849', {
@@ -35,13 +46,11 @@ export default class HomeScreen extends React.Component {
             .then((fbUserInfo) => {
               Actions.vinylMap({
                 userName: fbUserInfo.name,
-                userPic: fbUserInfo.picture
+                userPic: fbUserInfo.picture,
+                storeData: this.state.storeData
               })
+              console.log(this.state.storeData, "the store data on login");
               
-              // console.log(this.state, "the state");
-              // console.log(this.props, "the props");
-              
-              // Actions.vinylMap({userInfo: this.state});
             })
             .catch(() => {
               reject("ERROR GETTING DATA FROM FACEBOOK")
@@ -52,6 +61,9 @@ export default class HomeScreen extends React.Component {
       })
   };
 
+  componentDidMount() {
+    this.getLocations();
+  }
 
   render() {
     return (

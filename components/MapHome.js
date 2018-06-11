@@ -43,8 +43,6 @@ export default class MapHome extends Component {
         longitudeDelta: 0.0421
       }
     })
-    console.log(this.props.userPic.data.url, 'map props');
-
   }
 
   componentDidMount() {
@@ -53,17 +51,11 @@ export default class MapHome extends Component {
 
   render() {
     const userName = this.props.userName;
-    const userPic = this.props.userPic.data.url;
     return (
       <View
         style={styles.container}
       >
-        <Avatar
-          large
-          rounded
-          source={{ uri: userPic }}
-          overlayContainerStyle={styles.pic}
-        />
+
         <MapView
           provider={Expo.MapView.PROVIDER_GOOGLE}
           customMapStyle={MapStyle}
@@ -82,7 +74,9 @@ export default class MapHome extends Component {
           followsUserLocation={false}
           showsMyLocationButton={true}
         >
-          <StoreLocations />
+          <StoreLocations 
+          storeData= {this.props.storeData}
+          />
 
 
         </MapView>

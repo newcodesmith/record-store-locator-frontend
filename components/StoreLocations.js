@@ -19,67 +19,38 @@ export default class StoreLocations extends React.Component {
     storeData: null,
   };
 
-
-  getLocations = () => {
-    const locationUrl = "http://vinyl-finder-server.herokuapp.com/stores";
-    let locationDataGrab = response => {
-      this.setState({ storeData: response });
-      console.log(this.state.storeData, "Locations")
-
-    };
-    return fetch(locationUrl)
-      .then(response => response.json())
-      .then(locationDataGrab)
-      .catch(error => console.log(error))
-
-
+  openStoreInfo = (storeId) => {
+    Actions.storeInfo({
+      store_id: storeId,
+      storeData: this.props.storeData
+    })
   }
 
-  componentDidMount() {
-    this.getLocations();
-  }
 
   render() {
+    const storeData = this.props.storeData;
+    
     return (
-      <View>
+      storeData.map(storeData => {
+        const latitude = parseFloat(storeData.latitude)
+        const longitude = parseFloat(storeData.longitude)
+
+       return(
         <MapView.Marker
-          key={1}
+          key={storeData.store_id}
           coordinate={{
-            latitude: 39.740188,
-            longitude: -104.956992
+            latitude: latitude,
+            longitude: longitude
           }}
-          title={"Twist & Shout"}
+          title={storeData.name}
           description={"Record Store"}
-          onCalloutPress={()=> {console.log((key),"this was clicked")}}
-        />
-        <MapView.Marker
-          id={2}
-          coordinate={{
-            latitude: 39.736965,
-            longitude: -104.978906
+          onCalloutPress={() => {
+            console.log("lhadfv");
+            this.openStoreInfo(storeData.store_id);
           }}
-          title={"Wax Trax Records"}
-          description={"Record Store"}
         />
-        <MapView.Marker
-          id={3}
-          coordinate={{
-            latitude: 39.740255,
-            longitude: -104.975018
-          }}
-          title={"Angelo's CDs & More"}
-          description={"Record Store"}
-        />
-        <MapView.Marker
-          id={4}
-          coordinate={{
-            latitude: 39.736297,
-            longitude: -104.993243
-          }}
-          title={"Recollect Records"}
-          description={"Record Store"}
-        />
-      </View>
+       )
+      })
     )
   }
 }
