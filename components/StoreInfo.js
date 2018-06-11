@@ -31,7 +31,7 @@ export default class StoreInfo extends Component {
             <View
                 style={styles.container}
             >
-                <View style={{ backgroundColor: '#d3d3d3', padding: 30 }} >
+                <View style={{ backgroundColor: '#d3d3d3', padding: 30, alignItems: 'center', width: 350}} >
                     <Image
                         style={{ width: 300, height: 200 }}
                         source={{ uri: singleStore && singleStore.photo }}
