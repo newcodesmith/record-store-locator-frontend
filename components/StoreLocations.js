@@ -10,19 +10,15 @@ import Expo, { Constants } from 'expo';
 import { WebBrowser } from 'expo';
 import { SocialIcon, Avatar } from "react-native-elements"
 import { MapView } from 'expo';
-
 import { Actions } from 'react-native-router-flux';
 
 export default class StoreLocations extends React.Component {
 
-  state = {
-    storeData: null,
-  };
-
   openStoreInfo = (storeId) => {
     Actions.storeInfo({
       store_id: storeId,
-      storeData: this.props.storeData
+      storeData: this.props.storeData,
+      commentsData:this.props.commentsData
     })
   }
 
@@ -45,7 +41,6 @@ export default class StoreLocations extends React.Component {
           title={storeData.name}
           description={"Record Store"}
           onCalloutPress={() => {
-            console.log("lhadfv");
             this.openStoreInfo(storeData.store_id);
           }}
         />

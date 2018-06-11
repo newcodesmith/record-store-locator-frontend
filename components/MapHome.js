@@ -51,6 +51,8 @@ export default class MapHome extends Component {
 
   render() {
     const userName = this.props.userName;
+    console.log(this.props.userPic, "the Pic");
+    
     return (
       <View
         style={styles.container}
@@ -76,6 +78,7 @@ export default class MapHome extends Component {
         >
           <StoreLocations 
           storeData= {this.props.storeData}
+          commentsData= {this.props.commentsData}
           />
 
 

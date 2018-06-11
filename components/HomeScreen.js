@@ -21,6 +21,7 @@ export default class HomeScreen extends React.Component {
       }
     },
     storeData: [],
+    commentsData: []
   };
 
   getLocations = () => {
@@ -31,6 +32,17 @@ export default class HomeScreen extends React.Component {
     return fetch(locationUrl)
       .then(response => response.json())
       .then(locationDataGrab)
+      .catch(error => console.log(error))
+  }
+
+  getComments = () => {
+    const commentsUrl = "http://vinyl-finder-server.herokuapp.com/comments/";
+    let commentsDataGrab = response => {
+      this.setState({ commentsData: response });
+    };
+    return fetch(commentsUrl)
+      .then(response => response.json())
+      .then(commentsDataGrab)
       .catch(error => console.log(error))
   }
 
@@ -47,10 +59,9 @@ export default class HomeScreen extends React.Component {
               Actions.vinylMap({
                 userName: fbUserInfo.name,
                 userPic: fbUserInfo.picture,
-                storeData: this.state.storeData
-              })
-              console.log(this.state.storeData, "the store data on login");
-              
+                storeData: this.state.storeData,
+                commentsData: this.state.commentsData
+              })              
             })
             .catch(() => {
               reject("ERROR GETTING DATA FROM FACEBOOK")
@@ -63,6 +74,7 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.getLocations();
+    this.getComments();
   }
 
   render() {
