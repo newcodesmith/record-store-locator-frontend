@@ -13,8 +13,8 @@ export default class MapHome extends Component {
       mapRegion: null,
       hasLocationPermissions: false,
       locationResult: null,
-      currentUser: this.props.userName,
-      userPicture: this.props.userPic,
+      currentUserName: this.props.currentUserName,
+      currentUserPic: this.props.currentUserPic,
     }
   }
 
@@ -50,9 +50,9 @@ export default class MapHome extends Component {
   }
 
   render() {
-    const userName = this.props.userName;
-    console.log(this.props.userPic, "the Pic");
-    
+    const currentUserName = this.props.currentUserName;
+    const currentUserPic = this.props.currentUserPic.data.url;
+
     return (
       <View
         style={styles.container}
@@ -79,6 +79,9 @@ export default class MapHome extends Component {
           <StoreLocations 
           storeData= {this.props.storeData}
           commentsData= {this.props.commentsData}
+          currentUserName={currentUserName}
+          currentUserPic={currentUserPic}
+          getComments={this.props.getComments}
           />
 
 

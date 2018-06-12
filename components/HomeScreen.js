@@ -32,7 +32,7 @@ export default class HomeScreen extends React.Component {
     return fetch(locationUrl)
       .then(response => response.json())
       .then(locationDataGrab)
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 
   getComments = () => {
@@ -43,7 +43,7 @@ export default class HomeScreen extends React.Component {
     return fetch(commentsUrl)
       .then(response => response.json())
       .then(commentsDataGrab)
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 
   login = () => {
@@ -57,10 +57,11 @@ export default class HomeScreen extends React.Component {
             .then((response) => response.json())
             .then((fbUserInfo) => {
               Actions.vinylMap({
-                userName: fbUserInfo.name,
-                userPic: fbUserInfo.picture,
+                currentUserName: fbUserInfo.name,
+                currentUserPic: fbUserInfo.picture,
                 storeData: this.state.storeData,
-                commentsData: this.state.commentsData
+                commentsData: this.state.commentsData,
+                getComments: this.getComments
               })              
             })
             .catch(() => {

@@ -6,14 +6,16 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons';
 import Hyperlink from 'react-native-hyperlink';
 import StoreComments from './StoreComments.js';
-import CommentModal from './CommentModal.js';
+import AddCommentModal from './AddCommentModal';
 
 export default class StoreInfo extends Component {
 
     render() {
         const storeData = this.props.storeData;
         const selectedStore = this.props.store_id;
-        const commentsData = this.props.commentsData
+        const commentsData = this.props.commentsData;
+        const currentUserName = this.props.currentUserName;
+        const currentUserPic = this.props.currentUserPic;
 
         const singleStore = storeData.filter(store => {
             if (store.store_id === selectedStore) {
@@ -28,6 +30,9 @@ export default class StoreInfo extends Component {
         });
 
         const facebookUrl = singleStore && singleStore.facebook;
+
+        console.log(Object.getOwnPropertyNames(this.props), "store Info");
+        
 
         return (
             <ScrollView>
@@ -70,7 +75,12 @@ export default class StoreInfo extends Component {
                         </Hyperlink>
                         <Text style={{ fontSize: 15, marginTop: 10, width: 300 }}>Stores Description: {singleStore && singleStore.description}</Text>
 
-                        <CommentModal />
+                        <AddCommentModal
+                            selectedStore={selectedStore}
+                            currentUserName={currentUserName}
+                            currentUserPic={currentUserPic}
+                            getComments={this.props.getComments}
+                        />
 
                     </View>
                     <StoreComments
