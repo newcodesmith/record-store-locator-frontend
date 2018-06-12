@@ -4,8 +4,9 @@ import { Router, Scene } from 'react-native-router-flux';
 import Stars from 'react-native-stars';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons';
-import Hyperlink from 'react-native-hyperlink'
-import StoreComments from './StoreComments.js'
+import Hyperlink from 'react-native-hyperlink';
+import StoreComments from './StoreComments.js';
+import CommentModal from './CommentModal.js';
 
 export default class StoreInfo extends Component {
 
@@ -69,6 +70,7 @@ export default class StoreInfo extends Component {
                         </Hyperlink>
                         <Text style={{ fontSize: 15, marginTop: 10, width: 300 }}>Stores Description: {singleStore && singleStore.description}</Text>
 
+                        <CommentModal />
 
                     </View>
                     <StoreComments
