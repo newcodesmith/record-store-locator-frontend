@@ -18,34 +18,30 @@ export default class StoreComments extends Component {
         })
 
         return (
-            
+
             comments.map(comment => {
                 return (
                     <View
                         key={comment.comment_id}
-                        style={styles.container}
+                        style={styles.commentContainer}
                     >
-                        <View
-                            style={styles.userInfo}
-                        >
-                            <Avatar
-                                medium
-                                rounded
-                                source={{ uri: comment.user_pic }}
-                                overlayContainerStyle={styles.pic}
-                            />
-                            <Text
-                                style={styles.userName}
-                            >{comment.user_name}</Text>
-                        </View>
+                        <Avatar
+                            medium
+                            rounded
+                            source={{ uri: comment.user_pic }}
+                            overlayContainerStyle={styles.pic}
+                        />
+                        <Text
+                            style={styles.userName}
+                        >{comment.user_name}</Text>
                         <Stars
                             value={comment.rating}
                             spacing={8}
                             count={5}
                             starSize={20}
-                            backingColor='#ffffff'
+                            backingColor='#f6f6f6'
                         />
-                        <Text>{comment.comment}</Text>
+                        <Text style={{ marginTop: 10 }}>{comment.comment}</Text>
                     </View>
                 )
             })
@@ -54,11 +50,12 @@ export default class StoreComments extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
+    commentContainer: {
+        backgroundColor: '#f6f6f6',
+        padding: 30,
         alignItems: 'center',
-        justifyContent: 'center',
+        width: 350,
+        marginBottom: 5
     },
     pic: {
         flex: 1,
@@ -75,7 +72,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
     }
 });
 
