@@ -7,7 +7,10 @@ import MapHome from './components/MapHome.js';
 import StoreInfo from './components/StoreInfo.js';
 
 const App = () => (
-  <Router>
+  <Router 
+  navigationBarStyle={{ backgroundColor: '#2e4366' }}
+  headerTintColor='#ffffff'
+  titleStyle={{ color: '#ffffff' }}>
     <Scene
       key="root">
       <Scene
@@ -20,12 +23,12 @@ const App = () => (
       <Scene
         key="vinylMap"
         component={MapHome}
-        title="Vinyl Map"
+        title="Vinyl Finder Map"
       />
       <Scene
         key="storeInfo"
         component={StoreInfo}
-        title="Store Info"
+        title="Store Information"
         
       />
     </Scene>

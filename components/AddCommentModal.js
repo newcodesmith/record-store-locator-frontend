@@ -52,32 +52,31 @@ export default class AddCommentModal extends Component {
         <TouchableOpacity
           style={styles.addButton}
           onPress={this._toggleModal}>
-          <Icon
-            name='feedback'
-            color='#e7e7e7'
-          />
-          <Text style={styles.addButtonText} >Add Review</Text>
+          <Text style={styles.addButtonText}>Add Review</Text>
         </TouchableOpacity>
         <Modal isVisible={this.state.isModalVisible}>
           <View style={styles.modalContainer}>
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={this._toggleModal}>
-              <Icon
-                name='edit'
-                color='#616161'
-                size={10}
-              />
-              <Text style={styles.editButton} >Close</Text>
-            </TouchableOpacity>
-            <View styles={styles.userInfo}>
+            <View style={styles.closeButtonContainer}>
+              <TouchableOpacity
+                onPress={this._toggleModal}>
+                <Icon
+                  name='close-o'
+                  type='evilicon'
+                  color='#517fa4'
+                  size={40}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.userInfo}>
               <Avatar
+                style={styles.avatar}
                 large
                 rounded
                 source={{ uri: this.props.currentUserPic }}
-                overlayContainerStyle={styles.pic}
               />
-              <Text>{this.props.currentUserName}</Text>
+              <Text
+                style={styles.userName}
+              >{this.props.currentUserName}</Text>
             </View>
             <View style={{ alignItems: 'center' }}>
               <Stars
@@ -92,15 +91,14 @@ export default class AddCommentModal extends Component {
             <View>
               <FormLabel>Comment</FormLabel>
               <FormInput
+                inputStyle={styles.commentInput}
+                multiline={true}
+                numberOfLines={4}
                 onChangeText={(text) => this.setState({ comment: text })}
               />
               <View style={styles.saveButtonContainer}>
                 <TouchableOpacity
                   onPress={this.addReview}>
-                  <Icon
-                    name='feedback'
-                    color='#e7e7e7'
-                  />
                   <Text style={styles.saveButton}>Save Review</Text>
                 </TouchableOpacity>
               </View>
@@ -124,24 +122,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#652d96'
+    backgroundColor: '#2e4366'
+  },
+  closeButtonContainer: {
+    alignItems: 'flex-end'
   },
   userInfo: {
     alignItems: 'center',
   },
+  userName: {
+    margin: 20,
+    fontSize: 20
+  },
+  commentInput: {
+    width: 275,
+    justifyContent: 'flex-start',
+    color: '#000000'
+  },
   saveButtonContainer: {
     alignItems: 'center',
-    marginTop: 20,
-    backgroundColor: '#652d96',
-    width: 125,
   },
   saveButton: {
-    padding: 5,
+    margin: 10,
+    padding: 10,
     textAlign: "center",
     color: '#ffffff',
+    backgroundColor: '#2e4366',
+    width: 125
   },
   addButtonText: {
     color: '#ffffff',
-    backgroundColor: '#652d96'
+    backgroundColor: '#2e4366'
   }
 });

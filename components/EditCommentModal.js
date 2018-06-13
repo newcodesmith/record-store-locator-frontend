@@ -33,8 +33,8 @@ export default class EditCommentModal extends Component {
         })
             .then(response => response.json())
             .catch(err => console.error(err))
-            .then(() => this.props.getComments())
             .then(this._toggleModal)
+            .then(() => this.props.getComments())
     }
 
     deleteComment = (event) => {
@@ -49,7 +49,6 @@ export default class EditCommentModal extends Component {
         })
             .catch(err => console.error(err))
             .then(() => this.props.getComments())
-            .then(this._toggleModal)
     }
 
     render() {
@@ -58,7 +57,7 @@ export default class EditCommentModal extends Component {
                 <View>
                     {this.props.commentUserName === this.props.currentUserName ?
                         <TouchableOpacity
-                            style={styles.buttonContainer}
+                            style={styles.editButtonContainer}
                             onPress={this._toggleModal}>
                             <Icon
                                 name='edit'
@@ -70,23 +69,28 @@ export default class EditCommentModal extends Component {
                 </View>
                 <Modal isVisible={this.state.isModalVisible}>
                     <View style={styles.modalContainer}>
-                        <TouchableOpacity
-                            style={styles.buttonContainer}
-                            onPress={this._toggleModal}>
-                            <Icon
-                                name='edit'
-                                color='#616161'
-                                size={10}
+                        <View style={styles.closeButtonContainer}>
+                            <TouchableOpacity
+                                onPress={this._toggleModal}>
+                                <Icon
+                                    name='close-o'
+                                    type='evilicon'
+                                    color='#517fa4'
+                                    size={40}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.userInfo}>
+                            <Avatar
+                                style={styles.avatar}
+                                large
+                                rounded
+                                source={{ uri: this.props.currentUserPic }}
                             />
-                            <Text style={styles.editButton} >Close</Text>
-                        </TouchableOpacity>
-                        <Avatar
-                            large
-                            rounded
-                            source={{ uri: this.props.currentUserPic }}
-                            overlayContainerStyle={styles.pic}
-                        />
-                        <Text>{this.props.currentUserName}</Text>
+                            <Text
+                                style={styles.userName}
+                            >{this.props.currentUserName}</Text>
+                        </View>
                         <View style={{ alignItems: 'center' }}>
                             <Stars
                                 rating={this.props.rating}
@@ -100,17 +104,22 @@ export default class EditCommentModal extends Component {
                         <View>
                             <FormLabel>Comment</FormLabel>
                             <FormInput
+                                inputStyle={styles.commentInput}
+                                multiline={true}
+                                numberOfLines={4}
                                 defaultValue={this.props.comment}
                                 onChangeText={(text) => this.setState({ comment: text })}
                             />
-                            <TouchableOpacity
-                                onPress={this.updateComment}>
-                                <Text style={styles.button}>Save Review</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={this.deleteComment}>
-                                <Text style={styles.button}>Delete Review</Text>
-                            </TouchableOpacity>
+                            <View style={styles.saveButtonContainer}>
+                                <TouchableOpacity
+                                    onPress={this.updateComment}>
+                                    <Text style={styles.saveButton}>Save Review</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this.deleteComment}>
+                                    <Text style={styles.saveButton}>Delete Review</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </Modal>
@@ -121,29 +130,11 @@ export default class EditCommentModal extends Component {
 
 const styles = StyleSheet.create({
     modalContainer: {
-        flex: 1,
         backgroundColor: "#ffffff",
-        margin: 10
+        margin: 10,
+        padding: 20
     },
-    addButton: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: '#652d96'
-    },
-    button: {
-        marginTop: 20,
-        padding: 10,
-        color: '#ffffff',
-        backgroundColor: '#652d96'
-    },
-    addButtonText: {
-        color: '#ffffff',
-        backgroundColor: '#652d96'
-    },
-    buttonContainer: {
+    editButtonContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -154,5 +145,32 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 10,
         justifyContent: 'flex-end'
+    },
+    closeButtonContainer: {
+        alignItems: 'flex-end'
+    },
+    userInfo: {
+        alignItems: 'center',
+    },
+    userName: {
+        margin: 20,
+        fontSize: 20
+    },
+    commentInput: {
+        width: 275,
+        justifyContent: 'flex-start',
+        color: '#000000'
+    },
+    saveButtonContainer: {
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    saveButton: {
+        margin: 10,
+        padding: 10,
+        textAlign: "center",
+        color: '#ffffff',
+        backgroundColor: '#2e4366',
+        width: 125
     }
 });
