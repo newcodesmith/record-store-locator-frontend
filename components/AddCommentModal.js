@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import { Avatar, FormLabel, FormInput } from "react-native-elements"
+import { Avatar, FormLabel, FormInput, Icon } from "react-native-elements"
 import Stars from 'react-native-stars';
 
 
@@ -54,22 +54,36 @@ export default class AddCommentModal extends Component {
   render() {
 
     console.log(Object.getOwnPropertyNames(this.props), "modal");
+    console.log(this.props.currentUserPic, "current pic");
 
 
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={this._toggleModal}>
-          <Text style={styles.button}>Add Review</Text>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={this._toggleModal}>
+          <Icon
+            name='feedback'
+            color='#e7e7e7'
+          />
+          <Text style={styles.addButtonText} >Add Review</Text>
         </TouchableOpacity>
         <Modal isVisible={this.state.isModalVisible}>
           <View style={styles.modalContainer}>
-            <TouchableOpacity onPress={this._toggleModal}>
-              <Text>Close</Text>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={this._toggleModal}>
+              <Icon
+                name='edit'
+                color='#616161'
+                size={10}
+              />
+              <Text style={styles.editButton} >Close</Text>
             </TouchableOpacity>
             <Avatar
               large
               rounded
-              source={{ uri: this.props.userPic }}
+              source={{ uri: this.props.currentUserPic }}
               overlayContainerStyle={styles.pic}
             />
             <Text>{this.props.currentUserName}</Text>
@@ -88,7 +102,12 @@ export default class AddCommentModal extends Component {
               <FormInput
                 onChangeText={(text) => this.setState({ comment: text })}
               />
-              <TouchableOpacity onPress={this.addReview}>
+              <TouchableOpacity
+                onPress={this.addReview}>
+                <Icon
+                  name='feedback'
+                  color='#e7e7e7'
+                />
                 <Text style={styles.button}>Save Review</Text>
               </TouchableOpacity>
             </View>
@@ -105,9 +124,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     margin: 10
   },
+  addButton: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#652d96'
+  },
   button: {
     marginTop: 20,
     padding: 10,
+    color: '#ffffff',
+    backgroundColor: '#652d96'
+  },
+  addButtonText: {
     color: '#ffffff',
     backgroundColor: '#652d96'
   }
