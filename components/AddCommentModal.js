@@ -54,8 +54,6 @@ export default class AddCommentModal extends Component {
   render() {
 
     console.log(Object.getOwnPropertyNames(this.props), "modal");
-    console.log(this.props.currentUserPic, "current pic");
-
 
     return (
       <View style={{ flex: 1 }}>

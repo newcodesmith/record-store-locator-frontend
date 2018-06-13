@@ -57,7 +57,6 @@ export default class MapHome extends Component {
       <View
         style={styles.container}
       >
-
         <MapView
           provider={Expo.MapView.PROVIDER_GOOGLE}
           customMapStyle={MapStyle}

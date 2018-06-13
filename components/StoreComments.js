@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Stars from 'react-native-stars';
 import { Avatar, Icon } from 'react-native-elements';
+import EditCommentModal from './EditCommentModal.js';
 
 export default class StoreComments extends Component {
 
@@ -16,25 +17,23 @@ export default class StoreComments extends Component {
         })
 
         return (
+
+
             comments.map(comment => {
                 return (
                     <View
                         key={comment.comment_id}
                         style={styles.commentContainer}
                     >
-                        <View>
-                            {comment.comment_user_name === currentUserName ?
-                                <TouchableOpacity
-                                style={styles.buttonContainer}
-                                onPress={this.editComment}>
-                                    <Icon
-                                        name='edit'
-                                        color='#616161' 
-                                        size={10}
-                                        />
-                                    <Text style={styles.editButton}>Edit Review</Text>
-                                </TouchableOpacity> : null}
-                        </View>
+                        <EditCommentModal
+                            selectedComment={comment.comment_id}
+                            currentUserName={this.props.currentUserName}
+                            commentUserName={comment.user_name}
+                            currentUserPic={comment.user_pic}
+                            rating={comment.rating}
+                            comment={comment.comment}
+                            getComments={this.props.getComments}
+                        />
                         <View style={styles.userInfo}>
                             <Avatar
                                 medium

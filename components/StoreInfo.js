@@ -32,7 +32,6 @@ export default class StoreInfo extends Component {
         const facebookUrl = singleStore && singleStore.facebook;
 
         console.log(Object.getOwnPropertyNames(this.props), "store Info");
-        
 
         return (
             <ScrollView>
@@ -86,6 +85,8 @@ export default class StoreInfo extends Component {
                     <StoreComments
                         selectedStore={selectedStore}
                         commentsData={this.props.commentsData}
+                        currentUserName={currentUserName}
+                        getComments={this.props.getComments}
                     />
                 </View>
             </ScrollView>
