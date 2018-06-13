@@ -17,7 +17,7 @@ export default class StoreComments extends Component {
         })
 
         return (
-            comments.map(comment => {
+            comments.reverse().map(comment => {
                 return (
                     <View
                         key={comment.comment_id}

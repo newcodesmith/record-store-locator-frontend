@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
-import { Router, Scene } from 'react-native-router-flux';
+import { StyleSheet, Text, View, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
 import Stars from 'react-native-stars';
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons';
-import Hyperlink from 'react-native-hyperlink';
+import { SocialIcon, Icon } from 'react-native-elements';
 import StoreComments from './StoreComments.js';
 import AddCommentModal from './AddCommentModal';
 
@@ -49,6 +46,7 @@ export default class StoreInfo extends Component {
         });
 
         const facebookUrl = singleStore && singleStore.facebook;
+        const webAddress = singleStore && singleStore.web_address;
         return (
             <ScrollView>
                 <View
@@ -75,20 +73,26 @@ export default class StoreInfo extends Component {
                         <Text>{singleStore && singleStore.address}</Text>
                         <Text>{singleStore && singleStore.hours}</Text>
                         <Text>{singleStore && singleStore.phone}</Text>
-                        <Hyperlink
-                            linkDefault={true}
-                            linkStyle={{ color: '#2980b9', fontSize: 15 }}>
-                            <Text style={{ marginTop: 10 }}>{singleStore && singleStore.web_address}</Text>
-                        </Hyperlink>
-                        <Hyperlink
-                            linkStyle={{ color: '#2980b9', fontSize: 15 }}
-                            linkText={url => url === facebookUrl ? 'Facebook' : url}
-                        >
-                            <Text style={{ fontSize: 15, marginTop: 10 }}>
-                                {facebookUrl}
-                            </Text>
-                        </Hyperlink>
                         <Text style={{ fontSize: 15, marginTop: 10, width: 300 }}>Stores Description: {singleStore && singleStore.description}</Text>
+
+                        <View style={styles.linksContainer}>
+                            <View>
+                                <SocialIcon
+                                    onPress={() => Linking.openURL(facebookUrl)}
+                                    type="facebook"
+                                />
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => Linking.openURL(webAddress)}>
+                                <Icon
+                                    name='web'
+                                    type='Foundation'
+                                    color='#2e4366'
+                                    size={70}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
 
                         <AddCommentModal
                             selectedStore={selectedStore}
@@ -124,6 +128,10 @@ const styles = StyleSheet.create({
         width: 350,
         marginTop: 10,
         marginBottom: 10
+    },
+    linksContainer: {
+        flexDirection: 'row',
+        margin: 10,
     }
 });
 

@@ -102,7 +102,9 @@ export default class EditCommentModal extends Component {
                             />
                         </View>
                         <View>
-                            <FormLabel>Comment</FormLabel>
+                            <FormLabel
+                                labelStyle={styles.commentLabel}
+                            >Comment</FormLabel>
                             <FormInput
                                 inputStyle={styles.commentInput}
                                 multiline={true}
@@ -147,7 +149,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     closeButtonContainer: {
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginBottom: 20
     },
     userInfo: {
         alignItems: 'center',
@@ -156,14 +159,17 @@ const styles = StyleSheet.create({
         margin: 20,
         fontSize: 20
     },
+    commentLabel: {
+        color: '#2e4366'
+    },
     commentInput: {
         width: 275,
         justifyContent: 'flex-start',
         color: '#000000'
     },
     saveButtonContainer: {
-        alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     saveButton: {
         margin: 10,
