@@ -17,8 +17,6 @@ export default class StoreComments extends Component {
         })
 
         return (
-
-
             comments.map(comment => {
                 return (
                     <View

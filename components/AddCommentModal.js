@@ -4,8 +4,6 @@ import Modal from "react-native-modal";
 import { Avatar, FormLabel, FormInput, Icon } from "react-native-elements"
 import Stars from 'react-native-stars';
 
-
-
 export default class AddCommentModal extends Component {
   state = {
     isModalVisible: false,
@@ -49,9 +47,6 @@ export default class AddCommentModal extends Component {
   }
 
   render() {
-
-    // console.log(Object.getOwnPropertyNames(this.props), "modal");
-
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity

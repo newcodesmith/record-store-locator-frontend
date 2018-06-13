@@ -37,8 +37,9 @@ export default class EditCommentModal extends Component {
             .then(this._toggleModal)
     }
 
-    deleteComment = (commentId) => {
-        let deleteUrl = `http://vinyl-finder-server.herokuapp.com/comments/${commentId}`;
+    deleteComment = (event) => {
+        const commentId = this.props.selectedComment
+        const deleteUrl = `http://vinyl-finder-server.herokuapp.com/comments/${commentId}`;
         return fetch(deleteUrl, {
             method: "DELETE",
             headers: {
@@ -46,12 +47,12 @@ export default class EditCommentModal extends Component {
                 "Content-Type": "application/json"
             }
         })
-            .catch(err => console.error(err));
+            .catch(err => console.error(err))
+            .then(() => this.props.getComments())
+            .then(this._toggleModal)
     }
 
-
-
-    render() {        
+    render() {
         return (
             <View style={{ flex: 1 }}>
                 <View>
@@ -66,7 +67,7 @@ export default class EditCommentModal extends Component {
                             />
                             <Text style={styles.editButton}>Edit Review</Text>
                         </TouchableOpacity> : null}
-                </View>                
+                </View>
                 <Modal isVisible={this.state.isModalVisible}>
                     <View style={styles.modalContainer}>
                         <TouchableOpacity
@@ -103,12 +104,12 @@ export default class EditCommentModal extends Component {
                                 onChangeText={(text) => this.setState({ comment: text })}
                             />
                             <TouchableOpacity
-                                onPress={this.addReview}>
-                                <Icon
-                                    name='feedback'
-                                    color='#e7e7e7'
-                                />
+                                onPress={this.updateComment}>
                                 <Text style={styles.button}>Save Review</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={this.deleteComment}>
+                                <Text style={styles.button}>Delete Review</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

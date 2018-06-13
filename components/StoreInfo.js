@@ -17,19 +17,17 @@ export default class StoreInfo extends Component {
     getComments = () => {
         const commentsUrl = "http://vinyl-finder-server.herokuapp.com/comments/";
         let commentsDataGrab = response => {
-          this.setState({ commentsData: response });
+            this.setState({ commentsData: response });
         };
-        console.log("get comments", this.state.commentsData.length);
-        
         return fetch(commentsUrl)
-          .then(response => response.json())
-          .then(commentsDataGrab)
-          .catch(error => console.error(error))
-      }
+            .then(response => response.json())
+            .then(commentsDataGrab)
+            .catch(error => console.error(error))
+    }
 
-      componentDidMount() {
+    componentDidMount() {
         this.getComments();
-      }
+    }
 
     render() {
         const storeData = this.props.storeData;
@@ -51,9 +49,6 @@ export default class StoreInfo extends Component {
         });
 
         const facebookUrl = singleStore && singleStore.facebook;
-
-        // console.log(Object.getOwnPropertyNames(this.props), "store Info");
-
         return (
             <ScrollView>
                 <View

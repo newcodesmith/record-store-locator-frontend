@@ -12,7 +12,7 @@ import { SocialIcon, Avatar } from "react-native-elements"
 import { Actions } from 'react-native-router-flux';
 
 export default class HomeScreen extends React.Component {
-
+  
   state = {
     userName: null,
     userPic: {
@@ -34,7 +34,6 @@ export default class HomeScreen extends React.Component {
       .catch(error => console.error(error))
   }
 
-
   login = () => {
     Expo.Facebook.logInWithReadPermissionsAsync('1149728978500849', {
       permissions: ["public_profile"]
@@ -49,7 +48,7 @@ export default class HomeScreen extends React.Component {
                 currentUserName: fbUserInfo.name,
                 currentUserPic: fbUserInfo.picture,
                 storeData: this.state.storeData,
-              })              
+              })
             })
             .catch(() => {
               reject("ERROR GETTING DATA FROM FACEBOOK")

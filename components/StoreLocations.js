@@ -23,36 +23,31 @@ export default class StoreLocations extends React.Component {
     })
   }
 
-
   render() {
     const storeData = this.props.storeData;
-    // console.log(Object.getOwnPropertyNames(this.props), "store location");
-    
-
     return (
       storeData.map(storeData => {
         const latitude = parseFloat(storeData.latitude)
         const longitude = parseFloat(storeData.longitude)
 
-       return(
-        <MapView.Marker
-          key={storeData.store_id}
-          coordinate={{
-            latitude: latitude,
-            longitude: longitude
-          }}
-          title={storeData.name}
-          description={"Record Store"}
-          onCalloutPress={() => {
-            this.openStoreInfo(storeData.store_id);
-          }}
-        />
-       )
+        return (
+          <MapView.Marker
+            key={storeData.store_id}
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude
+            }}
+            title={storeData.name}
+            description={"Record Store"}
+            onCalloutPress={() => {
+              this.openStoreInfo(storeData.store_id);
+            }}
+          />
+        )
       })
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -18,10 +18,6 @@ export default class MapHome extends Component {
     }
   }
 
-  _handleMapRegionChange = mapRegion => {
-    this.setState({ mapRegion });
-  }
-
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -68,17 +64,16 @@ export default class MapHome extends Component {
             longitudeDelta: 0.0421
           }}
           region={this.state.mapRegion}
-          onRegionChange={this._handleMapRegionChange}
           zoomEnabled={true}
           pitchEnabled={true}
           showsUserLocation={true}
-          followsUserLocation={false}
+          followsUserLocation={true}
           showsMyLocationButton={true}
         >
-          <StoreLocations 
-          storeData= {this.props.storeData}
-          currentUserName={currentUserName}
-          currentUserPic={currentUserPic}
+          <StoreLocations
+            storeData={this.props.storeData}
+            currentUserName={currentUserName}
+            currentUserPic={currentUserPic}
           />
         </MapView>
       </View>
