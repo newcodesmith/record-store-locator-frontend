@@ -18,17 +18,15 @@ export default class StoreLocations extends React.Component {
     Actions.storeInfo({
       store_id: storeId,
       storeData: this.props.storeData,
-      commentsData: this.props.commentsData,
       currentUserName: this.props.currentUserName,
       currentUserPic: this.props.currentUserPic,
-      getComments: this.props.getComments
     })
   }
 
 
   render() {
     const storeData = this.props.storeData;
-    console.log(Object.getOwnPropertyNames(this.props), "store location");
+    // console.log(Object.getOwnPropertyNames(this.props), "store location");
     
 
     return (

@@ -77,13 +77,9 @@ export default class MapHome extends Component {
         >
           <StoreLocations 
           storeData= {this.props.storeData}
-          commentsData= {this.props.commentsData}
           currentUserName={currentUserName}
           currentUserPic={currentUserPic}
-          getComments={this.props.getComments}
           />
-
-
         </MapView>
       </View>
     );

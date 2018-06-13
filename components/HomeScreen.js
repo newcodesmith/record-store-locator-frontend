@@ -21,7 +21,6 @@ export default class HomeScreen extends React.Component {
       }
     },
     storeData: [],
-    commentsData: []
   };
 
   getLocations = () => {
@@ -35,16 +34,6 @@ export default class HomeScreen extends React.Component {
       .catch(error => console.error(error))
   }
 
-  getComments = () => {
-    const commentsUrl = "http://vinyl-finder-server.herokuapp.com/comments/";
-    let commentsDataGrab = response => {
-      this.setState({ commentsData: response });
-    };
-    return fetch(commentsUrl)
-      .then(response => response.json())
-      .then(commentsDataGrab)
-      .catch(error => console.error(error))
-  }
 
   login = () => {
     Expo.Facebook.logInWithReadPermissionsAsync('1149728978500849', {
@@ -60,8 +49,6 @@ export default class HomeScreen extends React.Component {
                 currentUserName: fbUserInfo.name,
                 currentUserPic: fbUserInfo.picture,
                 storeData: this.state.storeData,
-                commentsData: this.state.commentsData,
-                getComments: this.getComments
               })              
             })
             .catch(() => {
@@ -75,7 +62,6 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.getLocations();
-    this.getComments();
   }
 
   render() {

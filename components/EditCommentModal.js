@@ -51,11 +51,7 @@ export default class EditCommentModal extends Component {
 
 
 
-    render() {
-
-        console.log(Object.getOwnPropertyNames(this.props), "modal");
-        console.log(this.state.rating, "rating");
-        
+    render() {        
         return (
             <View style={{ flex: 1 }}>
                 <View>

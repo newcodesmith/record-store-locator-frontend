@@ -10,10 +10,31 @@ import AddCommentModal from './AddCommentModal';
 
 export default class StoreInfo extends Component {
 
+    state = {
+        commentsData: []
+    };
+
+    getComments = () => {
+        const commentsUrl = "http://vinyl-finder-server.herokuapp.com/comments/";
+        let commentsDataGrab = response => {
+          this.setState({ commentsData: response });
+        };
+        console.log("get comments", this.state.commentsData.length);
+        
+        return fetch(commentsUrl)
+          .then(response => response.json())
+          .then(commentsDataGrab)
+          .catch(error => console.error(error))
+      }
+
+      componentDidMount() {
+        this.getComments();
+      }
+
     render() {
         const storeData = this.props.storeData;
         const selectedStore = this.props.store_id;
-        const commentsData = this.props.commentsData;
+        const commentsData = this.state.commentsData;
         const currentUserName = this.props.currentUserName;
         const currentUserPic = this.props.currentUserPic;
 
@@ -31,7 +52,7 @@ export default class StoreInfo extends Component {
 
         const facebookUrl = singleStore && singleStore.facebook;
 
-        console.log(Object.getOwnPropertyNames(this.props), "store Info");
+        // console.log(Object.getOwnPropertyNames(this.props), "store Info");
 
         return (
             <ScrollView>
@@ -78,15 +99,15 @@ export default class StoreInfo extends Component {
                             selectedStore={selectedStore}
                             currentUserName={currentUserName}
                             currentUserPic={currentUserPic}
-                            getComments={this.props.getComments}
+                            getComments={this.getComments}
                         />
 
                     </View>
                     <StoreComments
                         selectedStore={selectedStore}
-                        commentsData={this.props.commentsData}
+                        commentsData={this.state.commentsData}
                         currentUserName={currentUserName}
-                        getComments={this.props.getComments}
+                        getComments={this.getComments}
                     />
                 </View>
             </ScrollView>

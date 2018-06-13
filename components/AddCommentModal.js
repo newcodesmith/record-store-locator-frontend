@@ -9,9 +9,6 @@ import Stars from 'react-native-stars';
 export default class AddCommentModal extends Component {
   state = {
     isModalVisible: false,
-    store_id: this.props.selectedStore,
-    user_name: this.props.currentUserName,
-    user_pic: this.props.currentUserPic,
     rating: 0,
     comment: null,
   };
@@ -21,9 +18,9 @@ export default class AddCommentModal extends Component {
 
   addReview = (event) => {
     const reviewInfo = {
-      comment_store_id: this.state.store_id,
-      user_name: this.state.user_name,
-      user_pic: this.state.user_pic,
+      comment_store_id: this.props.selectedStore,
+      user_name: this.props.currentUserName,
+      user_pic: this.props.currentUserPic,
       rating: this.state.rating,
       comment: this.state.comment,
     }
@@ -38,13 +35,13 @@ export default class AddCommentModal extends Component {
     })
       .then(response => response.json())
       .catch(err => console.error(err))
-      .then(() => this.props.getComments())
+      .then((data) => {
+        console.log(data, 'Our test data');
+        return this.props.getComments()
+      })
       .then(this._toggleModal)
       .then(response => {
         this.setState({
-          store_id: this.props.store_id,
-          user_name: this.props.currentUserName,
-          user_pic: this.props.currentUserPic,
           rating: 0,
           comment: null,
         })
@@ -53,7 +50,7 @@ export default class AddCommentModal extends Component {
 
   render() {
 
-    console.log(Object.getOwnPropertyNames(this.props), "modal");
+    // console.log(Object.getOwnPropertyNames(this.props), "modal");
 
     return (
       <View style={{ flex: 1 }}>
@@ -78,13 +75,15 @@ export default class AddCommentModal extends Component {
               />
               <Text style={styles.editButton} >Close</Text>
             </TouchableOpacity>
-            <Avatar
-              large
-              rounded
-              source={{ uri: this.props.currentUserPic }}
-              overlayContainerStyle={styles.pic}
-            />
-            <Text>{this.props.currentUserName}</Text>
+            <View styles={styles.userInfo}>
+              <Avatar
+                large
+                rounded
+                source={{ uri: this.props.currentUserPic }}
+                overlayContainerStyle={styles.pic}
+              />
+              <Text>{this.props.currentUserName}</Text>
+            </View>
             <View style={{ alignItems: 'center' }}>
               <Stars
                 rating={0}
@@ -100,14 +99,16 @@ export default class AddCommentModal extends Component {
               <FormInput
                 onChangeText={(text) => this.setState({ comment: text })}
               />
-              <TouchableOpacity
-                onPress={this.addReview}>
-                <Icon
-                  name='feedback'
-                  color='#e7e7e7'
-                />
-                <Text style={styles.button}>Save Review</Text>
-              </TouchableOpacity>
+              <View style={styles.saveButtonContainer}>
+                <TouchableOpacity
+                  onPress={this.addReview}>
+                  <Icon
+                    name='feedback'
+                    color='#e7e7e7'
+                  />
+                  <Text style={styles.saveButton}>Save Review</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </Modal>
@@ -118,9 +119,9 @@ export default class AddCommentModal extends Component {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    flex: 1,
     backgroundColor: "#ffffff",
-    margin: 10
+    margin: 10,
+    padding: 20
   },
   addButton: {
     flex: 1,
@@ -130,11 +131,19 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#652d96'
   },
-  button: {
+  userInfo: {
+    alignItems: 'center',
+  },
+  saveButtonContainer: {
+    alignItems: 'center',
     marginTop: 20,
-    padding: 10,
+    backgroundColor: '#652d96',
+    width: 125,
+  },
+  saveButton: {
+    padding: 5,
+    textAlign: "center",
     color: '#ffffff',
-    backgroundColor: '#652d96'
   },
   addButtonText: {
     color: '#ffffff',
