@@ -86,16 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ecf0f1',
   },
-  pic: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    zIndex: 2,
-    margin: 0,
-    padding: 0,
-  },
   map: {
-    zIndex: -1,
+    zIndex: 1,
     flex: 1,
     height: "100%",
     width: "100%",

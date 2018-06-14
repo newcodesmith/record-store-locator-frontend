@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  View,
   StyleSheet,
+  Image
 } from 'react-native';
-import Expo, { Constants } from 'expo';
-import { WebBrowser } from 'expo';
-import { SocialIcon, Avatar } from "react-native-elements"
 import { MapView } from 'expo';
 import { Actions } from 'react-native-router-flux';
 
@@ -32,11 +26,13 @@ export default class StoreLocations extends React.Component {
 
         return (
           <MapView.Marker
+          style={styles.marker}
             key={storeData.store_id}
             coordinate={{
               latitude: latitude,
               longitude: longitude
             }}
+            image={require('../assets/vinyl_finder_marker.png')}
             title={storeData.name}
             description={"Record Store"}
             onCalloutPress={() => {
@@ -55,11 +51,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#2e4366",
     alignItems: "center",
     justifyContent: "center",
-  },
-  headline: {
-    textAlign: "center",
-    fontSize: 50,
-    color: "white",
-    marginBottom: 100
   },
 })

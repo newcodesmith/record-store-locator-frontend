@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import {
   Text,
-  TouchableOpacity,
-  ScrollView,
+  Image,
   View,
   StyleSheet,
 } from 'react-native';
 import Expo, { Constants } from 'expo';
-import { WebBrowser } from 'expo';
-import { SocialIcon, Avatar } from "react-native-elements"
+import { SocialIcon } from "react-native-elements"
 import { Actions } from 'react-native-router-flux';
 
 export default class HomeScreen extends React.Component {
-  
+
   state = {
     userName: null,
     userPic: {
@@ -66,7 +64,10 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.headline}>VINYL FINDER</Text>
+        <Image
+          style={styles.logo}
+          source={require('../assets/vinyl_finder_logo.png')}
+        />
         <SocialIcon
           title="Sign In With Facebook"
           button
@@ -87,10 +88,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  headline: {
-    textAlign: "center",
-    fontSize: 50,
-    color: "white",
-    marginBottom: 100
+  logo: {
+    marginBottom: 100,
+    width: 300, 
+    height: 100
   },
 })
