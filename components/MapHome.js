@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
-import { Avatar } from "react-native-elements"
-import { Constants, Location, Permissions } from 'expo';
+import { View, StyleSheet } from 'react-native';
+import { Location, Permissions } from 'expo';
 import { MapView } from 'expo';
 import MapStyle from './MapStyle.json'
 import StoreLocations from './StoreLocations.js';

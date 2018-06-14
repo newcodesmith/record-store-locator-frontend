@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Stars from 'react-native-stars';
-import { Avatar, Icon } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 import EditCommentModal from './EditCommentModal.js';
 
 export default class StoreComments extends Component {

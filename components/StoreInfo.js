@@ -45,6 +45,18 @@ export default class StoreInfo extends Component {
             }
         });
 
+        const getRatingAverage = function (comments) {
+            var rating = 0,
+                average;
+            for (var i = 0; i < comments.length; i++) {
+                rating += comments[i].rating;
+            }
+            average = rating / comments.length;
+            return average;
+        };
+
+
+        const averageRating = getRatingAverage(comments)
         const facebookUrl = singleStore && singleStore.facebook;
         const webAddress = singleStore && singleStore.web_address;
         return (
@@ -62,7 +74,7 @@ export default class StoreInfo extends Component {
                         >{singleStore && singleStore.name}</Text>
                         <View style={{ alignItems: 'center', margin: 10 }}>
                             <Stars
-                                value={singleStore && singleStore.average_rating}
+                                value={averageRating}
                                 spacing={8}
                                 count={5}
                                 starSize={30}
