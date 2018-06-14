@@ -34,7 +34,6 @@ export default class AddCommentModal extends Component {
       .then(response => response.json())
       .catch(err => console.error(err))
       .then((data) => {
-        console.log(data, 'Our test data');
         return this.props.getComments()
       })
       .then(this._toggleModal)
