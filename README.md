@@ -1,3 +1,5 @@
+# record-store-locator-frontend
+
 # Vinyl Finder
 
 ## Purpose
