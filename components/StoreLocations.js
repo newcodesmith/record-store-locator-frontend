@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { MapView } from 'expo';
-import { Actions } from 'react-native-router-flux';
+import { Marker } from 'react-native-maps';
 
 export default class StoreLocations extends React.Component {
 
   openStoreInfo = (storeId) => {
-    Actions.storeInfo({
+    this.props.navigation.navigate('storeInfo', {
       store_id: storeId,
       storeData: this.props.storeData,
       currentUserName: this.props.currentUserName,
@@ -22,8 +21,7 @@ export default class StoreLocations extends React.Component {
         const longitude = parseFloat(storeData.longitude)
 
         return (
-          <MapView.Marker
-          style={styles.marker}
+          <Marker
             key={storeData.store_id}
             coordinate={{
               latitude: latitude,

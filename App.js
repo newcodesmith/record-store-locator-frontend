@@ -1,38 +1,55 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Router, Scene } from 'react-native-router-flux';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import HomeScreen from './components/HomeScreen.js';
-import MapHome from './components/MapHome.js';
-import StoreInfo from './components/StoreInfo.js';
+import { StoreProvider } from './src/context/StoreContext';
+import { CommentsProvider } from './src/context/CommentsContext';
+import HomeScreen from './src/screens/HomeScreen';
+import MapHome from './src/screens/MapHome';
+import StoreInfo from './src/screens/StoreInfo';
+import { COLORS } from './src/constants/colors';
+
+const Stack = createNativeStackNavigator();
+
+const RootNavigator = () => (
+  <NavigationContainer>
+    <Stack.Navigator
+      initialRouteName="home"
+      screenOptions={{
+        headerStyle: { backgroundColor: COLORS.primary },
+        headerTintColor: '#ffffff',
+        headerTitleStyle: { color: '#ffffff' },
+      }}
+    >
+      <Stack.Screen
+        name="home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="vinylMap"
+        component={MapHome}
+        options={{ title: 'Vinyl Finder Map' }}
+      />
+      <Stack.Screen
+        name="storeInfo"
+        component={StoreInfo}
+        options={{ title: 'Store Information' }}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 
 const App = () => (
-  <Router 
-  navigationBarStyle={{ backgroundColor: '#2e4366' }}
-  headerTintColor='#ffffff'
-  titleStyle={{ color: '#ffffff' }}>
-    <Scene
-      key="root">
-      <Scene
-        key="home"
-        component={HomeScreen}
-        style={styles.container}
-        hideNavBar={true}
-        initial
-      />
-      <Scene
-        key="vinylMap"
-        component={MapHome}
-        title="Vinyl Finder Map"
-      />
-      <Scene
-        key="storeInfo"
-        component={StoreInfo}
-        title="Store Information"
-        
-      />
-    </Scene>
-  </Router>
+  <SafeAreaProvider>
+    <StoreProvider>
+      <CommentsProvider>
+        <RootNavigator />
+      </CommentsProvider>
+    </StoreProvider>
+  </SafeAreaProvider>
 );
 
 export default App;
@@ -40,7 +57,7 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2e4366',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },

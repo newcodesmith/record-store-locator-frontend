@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Modal from "react-native-modal";
-import { Avatar, FormLabel, FormInput, Icon } from "react-native-elements"
+import { Alert, StyleSheet, Text, TouchableOpacity, View, Image, TextInput, Modal } from "react-native";
 import Stars from 'react-native-stars';
 
 export default class AddCommentModal extends Component {
@@ -22,7 +20,7 @@ export default class AddCommentModal extends Component {
       rating: this.state.rating,
       comment: this.state.comment,
     }
-    const updateUrl = "http://vinyl-finder-server.herokuapp.com/comments/";
+    const updateUrl = "https://vinyl-finder-server-6897eaebc32c.herokuapp.com/comments/";
     return fetch(updateUrl, {
       method: "POST",
       headers: {
@@ -31,8 +29,12 @@ export default class AddCommentModal extends Component {
       },
       body: JSON.stringify(reviewInfo)
     })
-      .then(response => response.json())
-      .catch(err => console.error(err))
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to add review (${response.status})`);
+        }
+        return response.json();
+      })
       .then((data) => {
         return this.props.getComments()
       })
@@ -42,6 +44,10 @@ export default class AddCommentModal extends Component {
           rating: 0,
           comment: null,
         })
+      })
+      .catch(err => {
+        console.error(err);
+        Alert.alert('Unable to save review', 'The server returned an error. Please try again shortly.');
       })
   }
 
@@ -53,55 +59,53 @@ export default class AddCommentModal extends Component {
           onPress={this._toggleModal}>
           <Text style={styles.addButtonText}>Add Review</Text>
         </TouchableOpacity>
-        <Modal isVisible={this.state.isModalVisible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.closeButtonContainer}>
-              <TouchableOpacity
-                onPress={this._toggleModal}>
-                <Icon
-                  name='close-o'
-                  type='evilicon'
-                  color='#517fa4'
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.userInfo}>
-              <Avatar
-                style={styles.avatar}
-                large
-                rounded
-                source={{ uri: this.props.currentUserPic }}
-              />
-              <Text
-                style={styles.userName}
-              >{this.props.currentUserName}</Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <Stars
-                rating={0}
-                update={(val) => { this.setState({ rating: val }) }}
-                spacing={4}
-                starSize={40}
-                count={5}
-                backingColor='#a1a1a1'
-              />
-            </View>
-            <View>
-              <FormLabel
-                labelStyle={styles.commentLabel}
-              >Comment</FormLabel>
-              <FormInput
-                inputStyle={styles.commentInput}
-                multiline={true}
-                numberOfLines={4}
-                onChangeText={(text) => this.setState({ comment: text })}
-              />
-              <View style={styles.saveButtonContainer}>
+        <Modal
+          visible={this.state.isModalVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={this._toggleModal}
+        >
+          <View style={styles.modalBackdrop}>
+            <View style={styles.modalContainer}>
+              <View style={styles.closeButtonContainer}>
                 <TouchableOpacity
-                  onPress={this.addReview}>
-                  <Text style={styles.saveButton}>Save Review</Text>
+                  onPress={this._toggleModal}>
+                  <Text style={styles.closeButton}>×</Text>
                 </TouchableOpacity>
+              </View>
+              <View style={styles.userInfo}>
+                <Image
+                  style={styles.avatar}
+                  source={{ uri: this.props.currentUserPic }}
+                />
+                <Text
+                  style={styles.userName}
+                >{this.props.currentUserName}</Text>
+              </View>
+              <View style={{ alignItems: 'center' }}>
+                <Stars
+                  rating={0}
+                  update={(val) => { this.setState({ rating: val }) }}
+                  spacing={4}
+                  starSize={40}
+                  count={5}
+                  backingColor='#a1a1a1'
+                />
+              </View>
+              <View>
+                <Text style={styles.commentLabel}>Comment</Text>
+                <TextInput
+                  style={styles.commentInput}
+                  multiline={true}
+                  numberOfLines={4}
+                  onChangeText={(text) => this.setState({ comment: text })}
+                />
+                <View style={styles.saveButtonContainer}>
+                  <TouchableOpacity
+                    onPress={this.addReview}>
+                    <Text style={styles.saveButton}>Save Review</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
@@ -112,6 +116,11 @@ export default class AddCommentModal extends Component {
 }
 
 const styles = StyleSheet.create({
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+  },
   modalContainer: {
     backgroundColor: "#ffffff",
     margin: 10,
@@ -129,8 +138,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginBottom: 20
   },
+  closeButton: {
+    color: '#517fa4',
+    fontSize: 38,
+    lineHeight: 38,
+  },
   userInfo: {
     alignItems: 'center',
+  },
+  avatar: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
   },
   userName: {
     margin: 20,
@@ -141,6 +160,10 @@ const styles = StyleSheet.create({
   },
   commentInput: {
     width: 275,
+    borderWidth: 1,
+    borderColor: '#d6d6d6',
+    borderRadius: 4,
+    padding: 8,
     justifyContent: 'flex-start',
     color: '#000000'
   },

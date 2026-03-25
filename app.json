@@ -3,9 +3,12 @@
     "name": "record-store-locator-frontend",
     "description": "This project is really great.",
     "slug": "record-store-locator-frontend",
-    "privacy": "public",
-    "sdkVersion": "27.0.0",
-    "platforms": ["ios", "android"],
+    "scheme": "vinylfinder",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,7 +24,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": true
     },
     "android": {
       "package": "com.newcodesmith.vinylfinder",
@@ -30,6 +33,10 @@
           "apiKey": "AIzaSyDdduVnhUIyVOMDGmaOng4yfnpIxM5X8Kc"
         }
       }
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-web-browser"
+    ]
   }
 }

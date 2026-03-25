@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import Stars from 'react-native-stars';
-import { Avatar } from 'react-native-elements';
 import EditCommentModal from './EditCommentModal.js';
 
 export default class StoreComments extends Component {
@@ -33,9 +32,8 @@ export default class StoreComments extends Component {
                             getComments={this.props.getComments}
                         />
                         <View style={styles.userInfo}>
-                            <Avatar
-                                medium
-                                rounded
+                            <Image
+                                style={styles.avatar}
                                 source={{ uri: comment.user_pic }}
                             />
                             <Text
@@ -70,6 +68,11 @@ const styles = StyleSheet.create({
     userName: {
         margin: 10,
         alignItems: 'center',
+    },
+    avatar: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
     },
     userInfo: {
         flex: 1,

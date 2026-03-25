@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, View, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
 import Stars from 'react-native-stars';
-import { SocialIcon, Icon } from 'react-native-elements';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import StoreComments from './StoreComments.js';
 import AddCommentModal from './AddCommentModal';
 
@@ -12,14 +12,22 @@ export default class StoreInfo extends Component {
     };
 
     getComments = () => {
-        const commentsUrl = "http://vinyl-finder-server.herokuapp.com/comments/";
+        const commentsUrl = "https://vinyl-finder-server-6897eaebc32c.herokuapp.com/comments/";
         let commentsDataGrab = response => {
             this.setState({ commentsData: response });
         };
         return fetch(commentsUrl)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load comments (${response.status})`);
+                }
+                return response.json();
+            })
             .then(commentsDataGrab)
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error);
+                Alert.alert('Unable to load comments', 'The server returned an error. Please try again shortly.');
+            })
     }
 
     componentDidMount() {
@@ -27,11 +35,11 @@ export default class StoreInfo extends Component {
     }
 
     render() {
-        const storeData = this.props.storeData;
-        const selectedStore = this.props.store_id;
+        const storeData = this.props.route?.params?.storeData || [];
+        const selectedStore = this.props.route?.params?.store_id;
         const commentsData = this.state.commentsData;
-        const currentUserName = this.props.currentUserName;
-        const currentUserPic = this.props.currentUserPic;
+        const currentUserName = this.props.route?.params?.currentUserName;
+        const currentUserPic = this.props.route?.params?.currentUserPic;
 
         const singleStore = storeData.filter(store => {
             if (store.store_id === selectedStore) {
@@ -59,6 +67,7 @@ export default class StoreInfo extends Component {
         const averageRating = getRatingAverage(comments)
         const facebookUrl = singleStore && singleStore.facebook;
         const webAddress = singleStore && singleStore.web_address;
+        
         return (
             <ScrollView>
                 <View
@@ -89,18 +98,20 @@ export default class StoreInfo extends Component {
 
                         <View style={styles.linksContainer}>
                             <View>
-                                <SocialIcon
+                                <TouchableOpacity
+                                    style={styles.linkButton}
                                     onPress={() => Linking.openURL(facebookUrl)}
-                                    type="facebook"
-                                />
+                                >
+                                    <FontAwesome name="facebook-square" size={56} color="#1877f2" />
+                                </TouchableOpacity>
                             </View>
                             <TouchableOpacity
+                                style={styles.linkButton}
                                 onPress={() => Linking.openURL(webAddress)}>
-                                <Icon
+                                <MaterialCommunityIcons
                                     name='web'
-                                    type='Foundation'
                                     color='#2e4366'
-                                    size={70}
+                                    size={56}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -144,6 +155,9 @@ const styles = StyleSheet.create({
     linksContainer: {
         flexDirection: 'row',
         margin: 10,
+    },
+    linkButton: {
+        marginHorizontal: 10,
     }
 });
 
