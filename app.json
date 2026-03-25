@@ -27,12 +27,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.newcodesmith.vinylfinder",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDdduVnhUIyVOMDGmaOng4yfnpIxM5X8Kc"
-        }
-      }
+      "package": "com.newcodesmith.vinylfinder"
     },
     "plugins": [
       "expo-font",

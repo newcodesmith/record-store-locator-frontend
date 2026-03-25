@@ -23,6 +23,16 @@ https://github.com/newcodesmith/record-store-locator-backend
 ## Installation
 To run, npm install expo-cli --global, dowload the Expo app on your mobile device. Run both clients and scan bar code.
 
+## Environment Variables
+This project uses an environment variable for the Android Google Maps key.
+
+1. Copy `.env.example` to `.env`
+2. Set `GOOGLE_MAPS_API_KEY` in `.env`
+
+Example:
+
+`GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here`
+
 ## License
 2018 NEWCODESMITH
 # Vinyl-Finder
